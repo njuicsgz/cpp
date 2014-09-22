@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+
+set host [lindex $argv 0 ]
+set user [lindex $argv 1 ]
+set passwd [lindex $argv 2 ]
+set port [lindex $argv 3 ]
+set cmd [lindex $argv 4 ]
+
+set timeout 3600
+spawn /usr/local/bin/ssh -p ${port} ${host} -l${user} "${cmd}" 
+
+expect {
+    "Are you sure you want to continue connecting (yes/no)?" {
+        send "yes\r"
+        expect "password:"
+	send "$passwd\r"
+        
+    }
+    #already has public key in ~/.ssh/known_hosts
+    "password:" {
+	send "$passwd\r"
+    }
+}
+
+expect "@"

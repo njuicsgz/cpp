@@ -1,0 +1,51 @@
+#! /bin/bash
+
+## ----------------------------------------------------------
+
+export PATH=/sbin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
+
+export WORKDIR=$( cd ` dirname $0 ` && pwd )
+
+if [[ ! -r "$WORKDIR/func-common.sh" ]]; then
+    echo "[$WORKDIR/func-common.sh] NOT FOUND"
+    exit 1
+fi
+
+. "$WORKDIR/func-common.sh" || exit 1
+
+cd "$WORKDIR" || exit 1
+
+## ----------------------------------------------------------
+
+IP=$( get_localip )
+
+RC=
+
+## ----------------------------------------------------------
+
+#allengao--begin
+
+#transport zkroot file
+tardir="/usr/local/apache2/htdocs/zookeeper"
+mv zk_root_mirror.tar.gz ${tardir};
+
+#process
+cd ${tardir} || die "cd error"
+rm -rf zk_root_mirror
+tar -xzvf zk_root_mirror.tar.gz
+
+bakname=$(date +%Y%m%d)+"zk_root_mirror.tar.gz"
+mv zk_root_mirror.tar.gz zk_dir_tree_bak/&{bakname}
+
+#allengao--end
+
+## ----------------------------------------------------------
+
+RC=$?
+
+if (( RC == 0 )); then
+    logmsg "RS $IP OPOK OPOK" >&2
+else
+    rmsg "RS $IP NOTOPOK NOTOPOK" >&2
+fi
+

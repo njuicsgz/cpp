@@ -1,0 +1,12 @@
+ba41ab2fc9f076e77c260d460b613fc4  ./func-common.sh
+3f766306cb3502ffa631b54b41f0cefe  ./abs-config
+d41d8cd98f00b204e9800998ecf8427e  ./abs-iplist
+8bbebdb0686f79de727b33231f456ebf  ./abs.sh
+7d1533e0f971601f50218c232ed119c1  ./auto.sh
+db5edc52edeb4070efde73fb9d892c38  ./scp.exp
+4311a6606d5ea1487a8cfa7448a8fe24  ./ssh.exp
+723422e048e4af5e4b9d86c3b155f1e4  ./readme
+ba25c0369d629b88814cb7b27a828e2d  ./amcamc.dd/main.sh
+ba41ab2fc9f076e77c260d460b613fc4  ./amcamc.dd/func-common.sh
+1c41b9b6525ade24effaef04014bd61d  ./bash_mt.sh
+10dd9813d9821327cdd19b1a55a1e32f  ./mt_auto.sh

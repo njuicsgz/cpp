@@ -1,0 +1,11 @@
+Author: samli@tencent.com
+
+
+1  edit amcamd.dd/main.sh 
+2  edit abs-iplist, format: IP PASS 36000
+
+3  run ./auto.sh    to run the in sequential order
+3  run ./mt_auto.sh to run the in parallel   order
+
+4  check ./notok and log.d
+

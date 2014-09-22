@@ -1,0 +1,2 @@
+file::: amcamc.dd   /root/  push
+com::: /bin/bash /root/amcamc.dd/main.sh; /bin/rm -rf "/root/amcamc.dd"
