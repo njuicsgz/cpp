@@ -3,8 +3,6 @@
 #include "helper.h"
 #include "Api.h"
 #include <errno.h>
-#include <netinet/in.h>
-#include <netdb.h>
 #include <unistd.h>
 
 //错误命令字

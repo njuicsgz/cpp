@@ -6,7 +6,7 @@ OBJ= Helper.o  main.o  cached_conn.o  protocol_long.o  raw_cache.o  runner.o  Cm
 
 ${TARGET}: $(OBJ)
 	${CXX} -Wall -g -pipe -o $@ $(INCFLGS) $^ ${LIB}
-	cp {TARGET} ../bin
+	cp ${TARGET} ../bin
 
 clean:
 	rm -rvf $(OBJ) *.o ${TARGET} *~ core* *.out 

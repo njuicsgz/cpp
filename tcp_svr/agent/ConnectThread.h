@@ -6,6 +6,8 @@
 #include <list>
 #include <set>
 #include "thread_runner.h"
+#include <netinet/in.h>
+#include <netdb.h>
 using namespace std;
 
 class Commpack;

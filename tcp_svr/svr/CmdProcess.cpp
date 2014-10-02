@@ -1,4 +1,5 @@
 #include "CmdProcess.h"
+#include "limits.h"
 #include "Helper.h"
 #include "CSessionMgr.h"
 #include "commpack.h"

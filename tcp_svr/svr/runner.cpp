@@ -4,6 +4,7 @@
 #include "runner.h"
 #include "Helper.h"
 #include "CSessionMgr.h"
+#include "limits.h"
 
 using namespace network;
 using namespace std;
