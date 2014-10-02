@@ -337,8 +337,8 @@ private:
          *  将该长度加上包总长, 则为需要申请的内存长
          *  加(4096 + 1)对4096取整, 得到4K的整数倍
          */
-        size_t newLen = 4096 * ((len - BODY_FREE_LEN + m_totalLen + 4097)
-                / 4096);
+        size_t newLen = 4096
+                * ((len - BODY_FREE_LEN + m_totalLen + 4097) / 4096);
         new_buff = (unsigned char *) malloc(newLen);
         if (NULL == new_buff)
             return false;

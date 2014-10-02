@@ -14,7 +14,7 @@ enum cmd
 };
 
 CCmdProcess::CCmdProcess(MQ& req, MQ& rsp) :
-    m_ReqQ(req), m_RspQ(rsp)
+        m_ReqQ(req), m_RspQ(rsp)
 {
 }
 
@@ -32,13 +32,13 @@ void CCmdProcess::SendToClient(unsigned int flow, Commpack *pPack)
     msg.AttachMessage((char*) pData, nSize);
     if (!m_RspQ.Enqueue(msg))
     {
-        Warn("enqueue failed flow=[%d]",flow);
+        Warn("enqueue failed flow=[%d]", flow);
     }
 }
 
 void CCmdProcess::Run()
 {
-    for(;;)
+    for (;;)
     {
         Message msg(ULONG_MAX);
         if (!m_ReqQ.Dequeue(msg))
@@ -71,34 +71,33 @@ void CCmdProcess::OnCmdCome(unsigned int flow, char *pData, int nLen)
 void CCmdProcess::ProcessCmd(unsigned int flow, Commpack *pPack)
 {
     unsigned int ulCmd = pPack->GetCmd();
-    switch (ulCmd)
-    {
-        case CMD_TEST:
-            OnTest(flow, pPack);
-            break;
-        case CMD_LOGIN:
-            OnLogin(flow, pPack);
-            break;
-        case CMD_HEARTBEAT:
-            OnHeartbeat(flow, pPack);
-            break;
-        case CMD_GETALLCLIENT:
-            OnGetAllClient(flow, pPack);
-            break;
-        case CMD_TASK1:
-            OnTask1(flow, pPack);
-            break;
-        default:
-            break;
+    switch (ulCmd) {
+    case CMD_TEST:
+        OnTest(flow, pPack);
+        break;
+    case CMD_LOGIN:
+        OnLogin(flow, pPack);
+        break;
+    case CMD_HEARTBEAT:
+        OnHeartbeat(flow, pPack);
+        break;
+    case CMD_GETALLCLIENT:
+        OnGetAllClient(flow, pPack);
+        break;
+    case CMD_TASK1:
+        OnTask1(flow, pPack);
+        break;
+    default:
+        break;
     }
 }
 
 /*************************************** 
- 测试协议(CMD_TEST)
+ (CMD_TEST)
 
- Client->Server协议: ulTestData
+ Client->Server: ulTestData
 
- Server->Client协议: ulResult ulTestResult
+ Server->Client: ulResult ulTestResult
 
  ****************************************/
 
@@ -117,8 +116,7 @@ void CCmdProcess::OnTest(unsigned int flow, Commpack *pPack)
         pack.AddUInt(0);
         pack.AddUInt(ulTestData * 2);
         SendToClient(flow, &pack);
-    }
-    else
+    } else
     {
         pack.AddUInt(1000);
         SendToClient(flow, &pack);
@@ -126,11 +124,11 @@ void CCmdProcess::OnTest(unsigned int flow, Commpack *pPack)
 }
 
 /*************************************** 
- 登录协议(CMD_LOGIN)
+(CMD_LOGIN)
 
- Client->Server协议: ulDataLen szData
+ Client->Server: ulDataLen szData
 
- Server->Client协议: ulResult
+ Server->Client: ulResult
 
  ****************************************/
 
@@ -148,14 +146,13 @@ void CCmdProcess::OnLogin(unsigned int flow, Commpack *pPack)
     {
         pack.AddUInt(1000);
         SendToClient(flow, &pack);
-    }
-    else
+    } else
     {
         pack.AddUInt(0);
         SendToClient(flow, &pack);
     }
 
-    //一旦用户登陆后，将用户登录IP关联到flow上
+    //Associate IP of user to flow once user logon
     MapIP2Flow(flow);
 }
 
@@ -175,11 +172,11 @@ void CCmdProcess::OnGetAllClient(unsigned int flow, Commpack *pPack)
 
     unsigned int ulLen = 0;
 
-    vector < string > vecSession;
-    GetAllSession( vecSession);
+    vector<string> vecSession;
+    GetAllSession(vecSession);
 
     pack.AddUInt(vecSession.size());
-    for(unsigned int i = 0; i < vecSession.size(); i++)
+    for (unsigned int i = 0; i < vecSession.size(); i++)
     {
         string strIP = vecSession[i];
         ulLen = strIP.length() + 1;

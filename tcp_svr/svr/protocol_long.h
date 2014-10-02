@@ -6,32 +6,39 @@
 #include <string>
 using namespace std;
 
-class CProtocolLong : public CProtocolInterface
+class CProtocolLong: public CProtocolInterface
 {
 public:
-	CProtocolLong()
-	{
-	}
-	virtual ~CProtocolLong()
-	{
-	
-	}
-	virtual int GetMsg(Message& req);
+    CProtocolLong()
+    {
+    }
+    virtual ~CProtocolLong()
+    {
+
+    }
+    virtual int GetMsg(Message& req);
 };
 
-class CLongFactory : public CProtocolFactory
+class CLongFactory: public CProtocolFactory
 {
 public:
-	CLongFactory()
-	{}
-	virtual ~CLongFactory(){}
+    CLongFactory()
+    {
+    }
+    virtual ~CLongFactory()
+    {
+    }
 
-	virtual CProtocolInterface* CreateProtocolCache()
-	{return new CProtocolLong();}
-	virtual void DestroyProtocolCache(CProtocolInterface* p){delete p;}
+    virtual CProtocolInterface* CreateProtocolCache()
+    {
+        return new CProtocolLong();
+    }
+    virtual void DestroyProtocolCache(CProtocolInterface* p)
+    {
+        delete p;
+    }
 
 };
-
 
 #endif
 

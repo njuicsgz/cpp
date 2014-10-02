@@ -11,22 +11,21 @@
 using namespace std;
 
 class Commpack;
-class CConnectThread: public CRunner 
+class CConnectThread: public CRunner
 {
 public:
-	CConnectThread();
-	virtual ~CConnectThread();
-	virtual void Run();
+    CConnectThread();
+    virtual ~CConnectThread();
+    virtual void Run();
 
-	void OnTask1(Commpack *pPack);
-	
+    void OnTask1(Commpack *pPack);
 
 protected:
-	int Recv(int iFD,Commpack *&pack,unsigned int ulTimeOut);
-	
-	int SelectSingleRead(int fd, float timeout);
-	int SelectSingleRead(int fd, float timeout, fd_set* r_set);
-	void OnCmdCome(Commpack *pLongPackage);
+    int Recv(int iFD, Commpack *&pack, unsigned int ulTimeOut);
+
+    int SelectSingleRead(int fd, float timeout);
+    int SelectSingleRead(int fd, float timeout, fd_set* r_set);
+    void OnCmdCome(Commpack *pLongPackage);
 };
 
 #endif 

@@ -81,8 +81,7 @@ int CConnectThread::Recv(int iFD, Commpack *&pack, unsigned int ulTimeOut)
         {
             iResult = ERROR_FD_TIMEOUT;
             break;
-        }
-        else if (nRet < 0)
+        } else if (nRet < 0)
         {
             iResult = ERROR_FD_DOWN;
             break;
@@ -96,8 +95,7 @@ int CConnectThread::Recv(int iFD, Commpack *&pack, unsigned int ulTimeOut)
                 if (errno == EAGAIN)
                 {
                     continue;
-                }
-                else
+                } else
                 {
                     iResult = ERROR_FD_DOWN;
                     break;
@@ -106,8 +104,7 @@ int CConnectThread::Recv(int iFD, Commpack *&pack, unsigned int ulTimeOut)
             }
             nRecved += nRecv;
             nRemain -= nRecv;
-        }
-        else
+        } else
         {
             break;
         }
@@ -139,16 +136,17 @@ void CConnectThread::Run()
 {
     //循环执行，该线程不退出
     CApi stApi(g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort);
-    for(;;)
+    for (;;)
     {
         //登录服务器
         int iCount = 0;
-        for(; iCount < 3; iCount++)
+        for (; iCount < 3; iCount++)
         {
             if (stApi.OnLogin("Version 1.0") == 0)
                 break;
 
-            Err("[CConnectThread::Run]:Login to %s:%d failed", g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort );
+            Err("[CConnectThread::Run]:Login to %s:%d failed",
+                    g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort);
             stApi.Close();
             sleep(10);
         }
@@ -156,11 +154,13 @@ void CConnectThread::Run()
         if (iCount == 3)
         {
             sleep(60);
-            Err("[CConnectThread::Run]:Login to %s:%d failed 3 times", g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort );
+            Err("[CConnectThread::Run]:Login to %s:%d failed 3 times",
+                    g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort);
             continue;
         }
 
-        Info("[CConnectThread::Run]:Login to %s:%d success", g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort );
+        Info("[CConnectThread::Run]:Login to %s:%d success",
+                g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort);
 
         //select在FD上等待数据
         while (true)
@@ -168,11 +168,13 @@ void CConnectThread::Run()
             //发送心跳
             if (stApi.OnHeartBeat("Version 1.0") != 0)
             {
-                Err("[CConnectThread::Run]:Heartbeat to %s:%d failed", g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort );
+                Err("[CConnectThread::Run]:Heartbeat to %s:%d failed",
+                        g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort);
                 break;
             }
 
-            Info("[CConnectThread::Run]:Heartbeat to %s:%d success", g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort );
+            Info("[CConnectThread::Run]:Heartbeat to %s:%d success",
+                    g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort);
 
             //收包，等待10S收包，每次只收一个包
             Commpack * pLongPackage = NULL;
@@ -187,7 +189,8 @@ void CConnectThread::Run()
                 }
                 stApi.Close();
 
-                Err("[CConnectThread::Run]:Recv from %s:%d failed", g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort );
+                Err("[CConnectThread::Run]:Recv from %s:%d failed",
+                        g_svrConfig.strSvrIP.c_str(), g_svrConfig.iSvrPort);
                 break;
             }
 
@@ -229,11 +232,10 @@ void CConnectThread::OnCmdCome(Commpack *pLongPackage)
 {
     //判断是哪种协议
     unsigned int ulCmd = pLongPackage->GetCmd();
-    switch (ulCmd)
-    {
-        case CMD_TASK1:
-            OnTask1(pLongPackage);
-            break;
+    switch (ulCmd) {
+    case CMD_TASK1:
+        OnTask1(pLongPackage);
+        break;
     }
 
     return;
@@ -261,8 +263,7 @@ void CConnectThread::OnTask1(Commpack *pPack)
     if (pPack->GetUInt(ulTestData))
     {
         printf("%u\n", ulTestData);
-    }
-    else
+    } else
     {
         printf("GetData error\n");
     }

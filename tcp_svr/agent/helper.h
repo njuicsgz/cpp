@@ -20,30 +20,31 @@ using namespace std;
 
 typedef struct tagSvrConfig
 {
-	//服务器IP
-	string strSvrIP;
-	
-	//服务器端口
-	int iSvrPort;
-	
-	//日志配置
-	string strMainLogFileName;
-	int iMainLogLevel;
-	int iMainLogFileSize;
-	int iMainLogFileCount;
+    //服务器IP
+    string strSvrIP;
 
-	tagSvrConfig()
-	{
-		strSvrIP = "1.1.1.1";
-		iSvrPort = 8082;
-		
-		strMainLogFileName = "../log/agent.log";
-		iMainLogLevel = 5;
-		iMainLogFileSize = 1024*1024*10;
-		iMainLogFileCount = 3;
-	};
+    //服务器端口
+    int iSvrPort;
 
-}SvrConfig;
+    //日志配置
+    string strMainLogFileName;
+    int iMainLogLevel;
+    int iMainLogFileSize;
+    int iMainLogFileCount;
+
+    tagSvrConfig()
+    {
+        strSvrIP = "1.1.1.1";
+        iSvrPort = 8082;
+
+        strMainLogFileName = "../log/agent.log";
+        iMainLogLevel = 5;
+        iMainLogFileSize = 1024 * 1024 * 10;
+        iMainLogFileCount = 3;
+    }
+    ;
+
+} SvrConfig;
 
 extern SvrConfig g_svrConfig;
 

@@ -37,8 +37,8 @@ enum error_info
 };
 
 CApi::CApi(const string &sReportSvrIP, unsigned wPort) :
-    m_fdConnect(-1), m_bConnect(false), m_wPort(wPort), m_fRecvTimeout(60.0),
-            m_fSendTimeout(60.0)
+        m_fdConnect(-1), m_bConnect(false), m_wPort(wPort), m_fRecvTimeout(
+                60.0), m_fSendTimeout(60.0)
 {
     memset(m_szServerIP, 0x00, sizeof(m_szServerIP));
     strncpy(m_szServerIP, sReportSvrIP.c_str(), sizeof(m_szServerIP) - 1);
@@ -169,8 +169,7 @@ int CApi::AsyncConnect(unsigned int ip, unsigned short port)
             {
                 close(fd);
                 return -1;
-            }
-            else if (error)
+            } else if (error)
             {
                 close(fd);
                 return -1;
@@ -187,16 +186,16 @@ unsigned int CApi::GetServerIP(const char * szServerName)
 {
 
     unsigned int nIP = INADDR_NONE;
-    char pszAddress[256] = {0};
+    char pszAddress[256] = { 0 };
     strncpy(pszAddress, szServerName, sizeof(pszAddress) - 1);
 
     bool bIPAddress = true;
 
     int nLength = strlen(pszAddress);
-    for(int i = 0; i < nLength; i++)
+    for (int i = 0; i < nLength; i++)
     {
-        if ((pszAddress[i] > '9' || pszAddress[i] < '0') && pszAddress[i]
-                != '.')
+        if ((pszAddress[i] > '9' || pszAddress[i] < '0')
+                && pszAddress[i] != '.')
         {
             bIPAddress = false;
             break;
@@ -206,8 +205,7 @@ unsigned int CApi::GetServerIP(const char * szServerName)
     if (bIPAddress)
     {
         nIP = inet_addr(pszAddress);
-    }
-    else
+    } else
     {
         struct hostent *hs;
         hs = (struct hostent *) ::gethostbyname(pszAddress);
@@ -246,8 +244,7 @@ bool CApi::Open(const char *pstrIP, unsigned short nPort, float fRecvTimeout,
         m_fSendTimeout = fSendTimeout;
         m_fRecvTimeout = fRecvTimeout;
         return true;
-    }
-    else
+    } else
     {
         unsigned ip = GetServerIP(m_szServerIP);
         m_fdConnect = AsyncConnect(ip, m_wPort);
@@ -323,16 +320,14 @@ bool CApi::Recv(Commpack *&pack)
                 if (errno == EAGAIN)
                 {
                     continue;
-                }
-                else
+                } else
                 {
                     break;
                 }
             }
             nRecved += nRecv;
             nRemain -= nRecv;
-        }
-        else
+        } else
         {
             break;
         }
@@ -392,8 +387,8 @@ int CApi::Test(unsigned int ulTestData, unsigned int &ulTestResultData)
     }
 
     unsigned int nResult;
-    if (!pLongPackage->GetUInt(nResult) || pLongPackage->GetUInt(
-            ulTestResultData))
+    if (!pLongPackage->GetUInt(nResult)
+            || pLongPackage->GetUInt(ulTestResultData))
     {
         Close();
     }
@@ -523,12 +518,12 @@ int CApi::OnGetAllClient(vector<string> &vecClient)
         return (int) nResult;
     }
 
-    for(unsigned int i = 0; i < ulCount; i++)
+    for (unsigned int i = 0; i < ulCount; i++)
     {
         unsigned int ulLen;
         void * pData;
-        if (!pLongPackage->GetUInt(ulLen) || !pLongPackage->GetData(pData,
-                ulLen))
+        if (!pLongPackage->GetUInt(ulLen)
+                || !pLongPackage->GetData(pData, ulLen))
         {
             Close();
             if (pLongPackage)
